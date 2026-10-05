@@ -24,7 +24,7 @@ class Subject {
   }
 }
 
-main() {
+void main() {
   print('Enter student name:');
   String studentName = stdin.readLineSync()!;
 
@@ -48,5 +48,43 @@ main() {
         print('Invalid score. Please enter a score between 0 and 100.');
       }
     } while (score < 0 || score > 100);
+    
+    Subject subject = Subject(subjectName: subjectName, score: score);
+
+    subjects.add(subject);
   }
+  double totalScore = 0;
+
+  for (Subject subject in subjects) {
+    totalScore += subject.score;
+  }
+
+  double average = totalScore / numberOfSubjects;
+
+  String getLetterGrade(double average) {
+    if (average >= 70) {
+      return 'A';
+    } else if (average >= 60) {
+      return 'B';
+    } else if (average >= 50) {
+      return 'C';
+    } else if (average >= 45) {
+      return 'D';
+    } else if (average >= 40) {
+      return 'E';
+    } else {
+      return 'F';
+    }
+  }
+
+  print('\n$studentName\'s Results:');
+  for (Subject subject in subjects) {
+    print(
+      '${subject.subjectName}: ${subject.score} - \nGrade: ${subject.getLetterGrade()} \n---------------------------',
+    );
+  }
+  print('\nCummulative Score: ${totalScore.toStringAsFixed(2)}');
+  print('Average Score: ${average.toStringAsFixed(2)}');
+  print('Overall Grade: ${getLetterGrade(average)}');
+
 }
